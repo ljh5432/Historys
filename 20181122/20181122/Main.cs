@@ -78,7 +78,7 @@ namespace _20181122
             {
                 case "btnOn": // 데이터베이스 연결 요청 이벤트
                     msSql = new MSsql();
-                    boardForm = new Board();
+                    boardForm = new Board(msSql.Connection());
                     boardForm.MdiParent = this;
                     boardForm.WindowState = FormWindowState.Maximized;
                     boardForm.FormBorderStyle = FormBorderStyle.None;

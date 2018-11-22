@@ -11,12 +11,13 @@ namespace DB
     class MSsql
     {
         SqlConnection conn;
-        public MSsql()
+
+        public SqlConnection getConn()
         {
-            conn = Connection();
+            return conn;
         }
 
-        private SqlConnection Connection()
+        public SqlConnection Connection()
         {
             string host = "(localdb)\\ProjectsV13";
             string user = "root";
@@ -56,11 +57,31 @@ namespace DB
             return true;
         }
 
-        public SqlDataReader Select(string sql)
+        public SqlDataReader Select(SqlConnection conn, string sql)
         {
             SqlCommand comm = new SqlCommand(sql, conn);
             SqlDataReader reader = comm.ExecuteReader();
             return reader;
+        }
+
+        public void SelectClose(SqlDataReader reader)
+        {
+            reader.Close();
+        }
+
+        public bool Insert(SqlConnection conn, string sql)
+        {
+            try
+            {
+                SqlCommand comm = new SqlCommand(sql, conn);
+                comm.ExecuteNonQuery();
+            }
+            catch
+            {
+                return false;
+            }
+            
+            return true;
         }
     }
 }
