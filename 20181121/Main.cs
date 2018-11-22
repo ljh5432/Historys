@@ -84,7 +84,7 @@ namespace _20181121
             {
                 case "btn1":
                     MYsql my = new MYsql();
-                    my.Exec();
+                    //my.Exec();
                     break;
                 case "btn2":
                     MSsql ms = new MSsql();

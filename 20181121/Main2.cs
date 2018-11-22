@@ -1,4 +1,5 @@
 ﻿using Db;
+using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -21,6 +22,7 @@ namespace _20181121
         }
 
         ListView lv1, lv2;
+        string targetDB = "";
 
         private void Main2_Load(object sender, EventArgs e)
         {
@@ -91,46 +93,88 @@ namespace _20181121
 
             string sql = string.Format("select * from {0}", item.SubItems[0].Text);
 
-            MSsql ms = new MSsql();
-            SqlDataReader sdr = ms.Select(sql);
+            MySqlDataReader sdr1 = null;
+            SqlDataReader sdr2 = null;
+            switch (targetDB)
+            {
+                case "MSsql":
+                    MSsql ms = new MSsql();
+                    sdr2 = ms.Select(sql);
+                    break;
+                case "MYsql":
+                    MYsql my = new MYsql();
+                    sdr1 = my.Select(sql);
+                    break;
+            }
+            ReadList(sdr1, sdr2, lv2);
+        }
+
+        private void ReadList(MySqlDataReader sdr1, SqlDataReader sdr2, ListView lv)
+        {
+            lv.Clear();
             lv2.Clear();
             bool 일회전 = true;
-            while (sdr.Read())
-            {
-                ListViewItem row = null;
-                for (int i = 0; i < sdr.FieldCount; i++)
-                {
-                    if (일회전) lv2.Columns.Add(sdr.GetName(i));
 
-                    string value = sdr.GetValue(i).ToString();
-                    if (row == null) row = new ListViewItem(value);
-                    else row.SubItems.Add(value);
-                }
-                일회전 = false;
-                lv2.Items.Add(row);
+            switch (targetDB)
+            {
+                case "MSsql":
+                    while (sdr2.Read())
+                    {
+                        ListViewItem item = null;
+                        for (int i = 0; i < sdr2.FieldCount; i++)
+                        {
+                            if (일회전) lv.Columns.Add(sdr2.GetName(i));
+
+                            string value = sdr2.GetValue(i).ToString();
+                            if (item == null) item = new ListViewItem(value);
+                            else item.SubItems.Add(value);
+                        }
+                        일회전 = false;
+                        lv.Items.Add(item);
+                    }
+                    break;
+                case "MYsql":
+                    while (sdr1.Read())
+                    {
+                        ListViewItem item = null;
+                        for (int i = 0; i < sdr1.FieldCount; i++)
+                        {
+                            if (일회전) lv.Columns.Add(sdr1.GetName(i));
+
+                            string value = sdr1.GetValue(i).ToString();
+                            if (item == null) item = new ListViewItem(value);
+                            else item.SubItems.Add(value);
+                        }
+                        일회전 = false;
+                        lv.Items.Add(item);
+                    }
+                    break;
             }
+
+            
         }
 
         private void Btn_Click(object sender, EventArgs e)
         {
-            lv1.Clear();
-            MSsql ms = new MSsql();
-            SqlDataReader sdr = ms.Select("select name as tableName from gdc.sys.tables;");
-            bool 일회전 = true;
-            while (sdr.Read())
+            MySqlDataReader sdr1 = null;
+            SqlDataReader sdr2 = null;
+            Button btn = (Button)sender;
+            //MessageBox.Show(string.Format("Click {0}", btn.Name));
+            switch (btn.Name)
             {
-                ListViewItem item = null;
-                for (int i = 0; i < sdr.FieldCount; i++)
-                {
-                    if (일회전) lv1.Columns.Add(sdr.GetName(i));
-
-                    string value = sdr.GetValue(i).ToString();
-                    if (item == null) item = new ListViewItem(value);
-                    else item.SubItems.Add(value);
-                }
-                일회전 = false;
-                lv1.Items.Add(item);
+                case "btn1":
+                    targetDB = "MYsql";
+                    MYsql my = new MYsql();
+                    sdr1 = my.Select("show tables;");
+                    break;
+                case "btn2":
+                    targetDB = "MSsql";
+                    MSsql ms = new MSsql();
+                    sdr2 = ms.Select("select name as tableName from gdc.sys.tables;");
+                    break;
             }
+
+            ReadList(sdr1, sdr2, lv1);
         }
 
         private void Btn_MouseHover(object sender, EventArgs e)
