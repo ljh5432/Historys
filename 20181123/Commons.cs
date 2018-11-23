@@ -17,6 +17,7 @@ namespace _20181123
             panel.Size = (Size) hashtable["size"];
             panel.Location = (Point) hashtable["point"];
             panel.BackColor = (Color)hashtable["color"];
+            panel.Name = hashtable["name"].ToString();
             return panel;
         }
     }

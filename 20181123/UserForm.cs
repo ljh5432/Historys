@@ -25,7 +25,8 @@ namespace _20181123
 
         private void UserForm_Load(object sender, EventArgs e)
         {
-            
+            BackColor = Color.Red;
+            Dock = DockStyle.Fill;
         }
     }
 }

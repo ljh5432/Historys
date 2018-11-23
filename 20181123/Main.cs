@@ -39,13 +39,31 @@ namespace _20181123
             hashtable.Add("size", new Size(1000, 100));
             hashtable.Add("point", new Point(0, 0));
             hashtable.Add("color", Color.Silver);
+            hashtable.Add("name", "head");
             Controls.Add(comm.getPanel(hashtable));
 
             hashtable = new Hashtable();
             hashtable.Add("size", new Size(1000, 700));
             hashtable.Add("point", new Point(0, 100));
             hashtable.Add("color", Color.Yellow);
+            hashtable.Add("name", "contents");
             Controls.Add(comm.getPanel(hashtable));
+
+            // 버튼 이벤트 영역
+            UserForm uf = new UserForm(db);
+            uf.MdiParent = this;
+            uf.WindowState = FormWindowState.Maximized;
+            uf.FormBorderStyle = FormBorderStyle.None;
+            //uf.Show();
+
+            foreach (Control ctr in Controls)
+            {
+                if(ctr.Name == "contents")
+                {
+                    ctr.Controls.Add(uf);
+                    uf.Show();
+                }
+            }
 
         }
     }
