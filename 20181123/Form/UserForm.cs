@@ -14,19 +14,13 @@ namespace _20181123
 {
     public partial class UserForm : Form
     {
-        private MSsql db;
+        private object oDB;
 
         public UserForm(Object oDB)
         {
             InitializeComponent();
-            this.db = (MSsql) oDB;
-            Load += UserForm_Load;
-        }
-
-        private void UserForm_Load(object sender, EventArgs e)
-        {
-            BackColor = Color.Red;
-            Dock = DockStyle.Fill;
+            Load load = new Load(this, oDB);
+            Load += load.GetHandler("member");
         }
     }
 }

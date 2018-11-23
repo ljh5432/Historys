@@ -13,18 +13,13 @@ namespace _20181123
 {
     public partial class RuleForm : Form
     {
-        private MSsql db;
+        private object oDB;
 
         public RuleForm(Object oDB)
         {
             InitializeComponent();
-            this.db = (MSsql)oDB;
-            Load += RuleForm_Load;
-        }
-
-        private void RuleForm_Load(object sender, EventArgs e)
-        {
-            
+            Load load = new Load(this, oDB);
+            Load += load.GetHandler("rule");
         }
     }
 }
