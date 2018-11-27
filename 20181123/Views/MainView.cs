@@ -30,7 +30,6 @@ namespace _20181123
         private void getView()
         {
             hashtable = new Hashtable();
-            hashtable.Add("type", "");
             hashtable.Add("size", new Size(1000, 100));
             hashtable.Add("point", new Point(0, 0));
             hashtable.Add("color", Color.Silver);
