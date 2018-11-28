@@ -78,7 +78,7 @@ namespace _20181123
             hashtable.Add("point", new Point(0, 25));
             hashtable.Add("color", Color.White);
             hashtable.Add("name", "comboBox1");
-            hashtable.Add("click", (EventHandler) Member_click);
+            hashtable.Add("click", (EventHandler)Member_click);
             comboBox1 = comm.getComboBox(hashtable, member);
 
             hashtable = new Hashtable();
@@ -86,7 +86,7 @@ namespace _20181123
             hashtable.Add("point", new Point(0, 25));
             hashtable.Add("color", Color.White);
             hashtable.Add("name", "comboBox2");
-            hashtable.Add("click", (EventHandler) Rule_click);
+            hashtable.Add("click", (EventHandler)Rule_click);
             comboBox2 = comm.getComboBox(hashtable, rule);
 
             hashtable = new Hashtable();
@@ -224,7 +224,8 @@ namespace _20181123
 
         private void Member_click(object o, EventArgs a)
         {
-            switch (comboBox1.SelectedValue.ToString()) {
+            switch (comboBox1.SelectedValue.ToString())
+            {
                 case "0":
                     textBox1.Text = "";
                     return;

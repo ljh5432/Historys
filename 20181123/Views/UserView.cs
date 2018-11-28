@@ -142,7 +142,7 @@ namespace _20181123
             hashtable = new Hashtable();
             hashtable.Add("color", Color.White);
             hashtable.Add("name", "listView");
-            hashtable.Add("click", (MouseEventHandler) listView_click);
+            hashtable.Add("click", (MouseEventHandler)listView_click);
             listView = comm.getListView(hashtable, head);
 
             SelectData();
@@ -150,7 +150,7 @@ namespace _20181123
 
         private void listView_click(object o, EventArgs a)
         {
-            ListView lv = (ListView) o;
+            ListView lv = (ListView)o;
             ListView.SelectedListViewItemCollection itemGroup = lv.SelectedItems;
             ListViewItem item = itemGroup[0];
             textBox1.Text = item.SubItems[0].Text;
@@ -239,7 +239,8 @@ namespace _20181123
                 return;
             }
 
-            if (TextBoxCheck()) {
+            if (TextBoxCheck())
+            {
                 string sql = string.Format("update Member set mID = '{1}', mPass = '{2}', mName = '{3}', modDate = getDate() where mNo = {0}", textBox1.Text, textBox2.Text, textBox3.Text, textBox4.Text);
                 if (db.NonQuery(sql)) SelectData();
             }

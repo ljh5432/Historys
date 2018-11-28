@@ -61,6 +61,12 @@ create table [View] (
 	vNo int identity(1,1) not null,
 	vName varchar(10) not null,
 	vDesc varchar(200) null,
+	vType varchar(1) not null,
+	sizeX int null,
+	sizeY int null,
+	pointX int null,
+	pointY int null,
+	color int null,
 	delYn varchar(1) not null DEFAULT ('N'),
 	regDate datetime not null DEFAULT (getdate()),
 	modDate datetime not null DEFAULT (getdate())
@@ -68,10 +74,11 @@ create table [View] (
 go
 
 create table [ViewControl] (
-	svNo int identity(1,1) not null,
+	vcNo int identity(1,1) not null,
 	vNo int not null,
-	svName varchar(10) not null,
-	svText varchar(10) null,
+	vcType varchar(20) not null,
+	vcName varchar(10) not null,
+	vcText varchar(10) null,
 	width int null,
 	height int null,
 	sizeX int null,
